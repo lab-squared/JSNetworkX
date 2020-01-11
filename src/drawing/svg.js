@@ -649,7 +649,12 @@ function addNodes(G, nodes, force, selection, config) {
   var nsel = selection.enter()
     .append('g')
     .classed('node', true)
-    .call(drag);
+    .call(drag)
+    .on('click', function(d) {
+      if (d3.event.defaultPrevented === false) {
+        // Prevent pan if node is dragged
+        d.data.onClick()
+    });
 
   nsel.append(config.nodeShape).classed('node-shape', true);
 
